@@ -1,6 +1,6 @@
 ![Lab Status](https://img.shields.io/badge/status-Completed-success)
 # SSH Key Authentication Lab: Mac to Fedora
-Secure passwordless SSH authentication from macOS to Fedora with troubleshooting, hardening, and real-world debugging.
+Secure passwordless SSH authentication from macOS to Fedora with troubleshooting, hardening and real world debugging.
 
 ## Table of Contents
 - [Objective](#objective)
@@ -14,7 +14,7 @@ Secure passwordless SSH authentication from macOS to Fedora with troubleshooting
 
 ## Objective
 
-To configure secure, passwordless SSH access from a MacBook (client) to a Fedora Linux machine (server) using SSH key-based authentication. The goal was not just to connect — but to deeply understand how SSH works, troubleshoot real system-level errors, and document everything like a cloud security engineer in training.
+To configure secure, passwordless SSH access from a MacBook (client) to a Fedora Linux machine (server) using SSH key based authentication. The goal was not just to connect but to deeply understand how SSH works, troubleshoot real system-level errors and document everything like a cloud security engineer in training.
 
 ## Test Environment
 
