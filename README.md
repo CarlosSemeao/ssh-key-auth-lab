@@ -1,6 +1,6 @@
 ![Lab Status](https://img.shields.io/badge/status-Completed-success)
 # SSH Key Authentication Lab: Mac to Fedora
-Secure passwordless SSH authentication from macOS to Fedora with troubleshooting, hardening and real world debugging.
+Secure passwordless SSH authentication from macOS to Fedora with troubleshooting, hardening and debugging.
 
 ## Table of Contents
 - [Objective](#objective)
@@ -14,7 +14,7 @@ Secure passwordless SSH authentication from macOS to Fedora with troubleshooting
 
 ## Objective
 
-To configure secure, passwordless SSH access from a MacBook (client) to a Fedora Linux machine (server) using SSH key based authentication. The goal was not just to connect but to deeply understand how SSH works, troubleshoot real system-level errors and document everything like a cloud security engineer in training.
+To configure secure, passwordless SSH access from a MacBook (client) to a Fedora Linux machine (server) using SSH key based authentication. The goal was not just to connect but to deeply understand how SSH works, troubleshoot system errors and document everything.
 
 ## Test Environment
 
@@ -48,73 +48,75 @@ Auth Flow Summary:
 ## Step-by-Step Process
 
 1. Generated SSH key on macOS:
-```bash
+```
 ssh-keygen -t ed25519 -C "carlos@mac"
 ```
 Saved in default location: 
-```bash
+```
 ~/.ssh/id_ed25519
 ```
 Public key: 
-```bash
+```
 ~/.ssh/id_ed25519.pub
 ```
 
 2. Copy Public Key to Fedora (Manually)
 Logged into Fedora via local keyboard.
 Created file:
-```bash
+```
 nano ~/.ssh/authorized_keys
 ```
-Pasted contents of id_ed25519.pub
+
+3. Pasted contents of id_ed25519.pub
 Set permissions:
-```bash
+```
 chmod 700 ~/.ssh
 ```
-```bash
+```
 chmod 600 ~/.ssh/authorized_keys
 ```
 
 4. Fedora SSH Config Adjustments
 Edited
-```bash
+```
 /etc/ssh/sshd_config
 ```
-```bash
+```
 PasswordAuthentication no
 PubkeyAuthentication yes
 AuthorizedKeysFile /home/ops-admin/.ssh/authorized_keys
 ```
 
-Restarted SSH:
-```bash
+5. Restarted SSH:
+```
 sudo systemctl restart sshd
 ```
 
 6. Hardening Fedora
 Verified SELinux mode:
-```bash
+```
 getenforce
 ```
 Temporarily set to permissive:
-```bash
+```
 sudo setenforce 0
 ```
 Set correct permissions recursively:
-```bash
+```
 chown -R ops-admin:ops-admin ~/.ssh
 ```
-Synced clock:
-```bash
+
+7. Synced clock:
+```
 sudo dnf install chrony -y
 ```
-```bash
+```
 sudo systemctl enable --now chronyd
 ```
 
 8. Verified sshd_config
 Confirmed:
-```bash
+```
 PubkeyAuthentication yes
 PasswordAuthentication no
 AuthorizedKeysFile /home/ops-admin/.ssh/authorized_keys
@@ -122,26 +124,26 @@ AuthorizedKeysFile /home/ops-admin/.ssh/authorized_keys
 
 9. Restarted SSH service
 Used:
-```bash
+```
 sudo systemctl restart sshd
 ```
 
-11. Test Connection from macOS
-```bash
+10. Test Connection from macOS
+```
 ssh -i ~/.ssh/id_ed25519 ops-admin@192.168.1.8
 ```
-Success confirmed with direct terminal access to Fedora.
 
-13. Debugging
+11. Success confirmed with direct terminal access to Fedora.
+
+12. Debugging
 Used:
-```bash
+```
 ssh -vvv ...
 ```
 Checked logs:
-```bash
+```
 sudo journalctl -u sshd -f
 ```
-
 
 ## Errors and Fixes
 
@@ -160,7 +162,6 @@ sudo journalctl -u sshd -f
 ```bash
 sudo setenforce 0
 ```
-    
 This introduces:
 - Unclosed or malformed code blocks.
 - Improper use of inline backticks (`) inside triple backticks (```), which breaks Markdown parsing.
@@ -189,5 +190,4 @@ journalctl -u sshd -f
 
 ## Conclusion
 
-This was more than just setting up SSH. I broke, debugged, and rebuilt the connection manually—learning the internals of SSH, SELinux, system permissions, and Linux logs. This README documents the real-world experience of a future Cloud Security Engineer in training.
-# Synced from Fedora
+This was more than just setting up SSH. I broke, debugged and rebuilt the connection manually the internals of SSH, SELinux, system permissions and Linux logs. This README documents the experience. 
