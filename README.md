@@ -45,7 +45,7 @@ Auth Flow Summary:
 2. The public key is copied to Fedora’s `~/.ssh/authorized_keys`
 3. Fedora verifies the public key during login
 
-## Step-by-Step Process
+## Process
 
 1. Generated SSH key on macOS:
 ```
